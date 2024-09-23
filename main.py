@@ -3,6 +3,7 @@
 Spyder Editor
 
 This is a temporary script file.
+Yan Zhu and Yongbo Chen
 """
 
 from collections import defaultdict
@@ -62,10 +63,9 @@ def get_positions(counts):
     [0, 2, 5, 7]    
     """
     ###TODO
-    positions = [0] * len(counts)  # Initialize positions list
-    for i in range(1, len(counts)):
-        # Each position is the cumulative sum of the previous counts
-        positions[i] = positions[i - 1] + counts[i - 1]
+    prefix_sum, _ = scan(lambda x, y: x+y, 0, counts)
+
+    positions = [0] + prefix_sum[:-1]
     return positions
 
 
@@ -73,7 +73,7 @@ def test_get_positions():
     assert get_positions([2, 3, 2, 1]) == [0, 2, 5, 7]
     
     
-test_get_positions()
+
 def construct_output(a, positions):
     """
     Construct the final, sorted output.
@@ -92,7 +92,6 @@ def construct_output(a, positions):
     output = [0] * len(a)
    
     for i in a:
-       # 查找该值在 positions 中的插入位置
        pos = positions[i]
        output[pos] = i
        positions[i] += 1
@@ -176,5 +175,5 @@ def iterate(f, x, a):
 def flatten(sequences):
     return iterate(plus, [], sequences)
 
-
+test_get_positions()
 test_count_values_mr()
